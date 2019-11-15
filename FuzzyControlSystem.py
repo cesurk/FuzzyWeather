@@ -1,5 +1,6 @@
 # Import statements
 import requests
+import FuzzyRules as fr
 
 # Read in API Keys from txt file into dictionary
 def getCredentials():
@@ -39,6 +40,7 @@ def getWeather(credentials, location):
 
 # Apply Fuzzy Rule Set
 def applyFuzzyRules(weather):
+	# Example call: fr.temperatureRule(weather)
 	return
 
 # Main function
