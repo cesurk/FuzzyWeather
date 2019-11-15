@@ -37,7 +37,7 @@ def getWeather(credentials, location):
 	return response.json()
 
 # Apply Fuzzy Rule Set
-def applyFuzzyRules():
+def applyFuzzyRules(weather):
 	return
 
 # Main function
@@ -47,6 +47,5 @@ def main():
 	location = getLocationFromUser()
 	weather = getWeather(credentials, location)
 	# Call Fuzzy Rules to decide what to wear!
-	applyFuzzyRules()
-
+	applyFuzzyRules(weather)
 main()
