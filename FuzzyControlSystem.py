@@ -13,17 +13,28 @@ def getCredentials():
 	# Return credentials
 	return credentials
 
+# Get Location as input from User
+def getLocationFromUser():
+	location = str(input("Enter your location: "))
+	return location
+
 # Get weather information from OpenWeatherMap API
 def getWeather(credentials, location):
 	# Build api string
 	api_call = (
 		"https://api.openweathermap.org/" 
-		+ "data/2.5/weather?q=" + location.replace(" ", "+")
+		+ "data/2.5/weather?q=" + location.replace(" ", "%20")
 		+ "&appid=" + credentials["OpenWeatherAPI"] )
-	# Make api call
+	# Execute API call
 	response = requests.get(api_call)
-	print(response)
-	return response
+
+	# If API call was not valid, try again
+	if (response.status_code != 200):
+		print("Location could not be found, please try again! Consider adding province/state.")
+		updated_location = getLocationFromUser()
+		return getWeather(credentials, updated_location)
+	
+	return response.json()
 
 # Apply Fuzzy Rule Set
 def applyFuzzyRules():
@@ -33,8 +44,7 @@ def applyFuzzyRules():
 def main():
 	# Get credentials and user's location from input
 	credentials = getCredentials()
-	location = str(input("Enter your location: "))
-	# Get weather for current location
+	location = getLocationFromUser()
 	weather = getWeather(credentials, location)
 	# Call Fuzzy Rules to decide what to wear!
 	applyFuzzyRules()
