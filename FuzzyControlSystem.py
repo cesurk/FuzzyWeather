@@ -24,7 +24,8 @@ def getWeather(credentials, location):
 	api_call = (
 		"https://api.openweathermap.org/" 
 		+ "data/2.5/weather?q=" + location.replace(" ", "%20")
-		+ "&appid=" + credentials["OpenWeatherAPI"] )
+		+ "&appid=" + credentials["OpenWeatherAPI"] 
+		+ "&units=metric" )
 	# Execute API call
 	response = requests.get(api_call)
 
