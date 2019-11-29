@@ -23,19 +23,20 @@ def getLocationFromUser():
 def getWeather(credentials, location):
 	# Build api string
 	api_call = (
-		"https://api.openweathermap.org/" 
+		"https://api.openweathermap.org/"
 		+ "data/2.5/weather?q=" + location.replace(" ", "%20")
-		+ "&appid=" + credentials["OpenWeatherAPI"] 
+		+ "&appid=" + credentials["OpenWeatherAPI"]
 		+ "&units=metric" )
 	# Execute API call
 	response = requests.get(api_call)
 
 	# If API call was not valid, try again
 	if (response.status_code != 200):
-		print("Location could not be found, please try again! Consider adding province/state.")
+		print("Location could not be found, please try again!")
+		print("Please use the format 'City, Province, Country'.")
 		updated_location = getLocationFromUser()
 		return getWeather(credentials, updated_location)
-	
+
 	return response.json()
 
 # Apply Fuzzy Rule Set

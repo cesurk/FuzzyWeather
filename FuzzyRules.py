@@ -1,3 +1,8 @@
+# Import statements
+# import numpy as np
+# import skfuzzy as fuzz
+# from skfuzzy import control as ctrl
+
 def windRule(weather):
    # Use value: weather["wind"]["speed"]
    return
@@ -15,14 +20,14 @@ def descriptionRule(weather):
    return
 
 
-# ----- SAMPLE API RESULT AS REFERENCE ----- 
-# { 
-#    "coord":{ 
+# ----- SAMPLE API RESULT AS REFERENCE -----
+# {
+#    "coord":{
 #       "lon":-75.69,
 #       "lat":45.42
 #    },
-#    "weather":[ 
-#       { 
+#    "weather":[
+#       {
 #          "id":500,
 #          "main":"Rain",
 #          "description":"light rain",
@@ -30,7 +35,7 @@ def descriptionRule(weather):
 #       }
 #    ],
 #    "base":"stations",
-#    "main":{ 
+#    "main":{
 #       "temp":-0.18,
 #       "pressure":1016,
 #       "humidity":80,
@@ -38,19 +43,19 @@ def descriptionRule(weather):
 #       "temp_max":1.67
 #    },
 #    "visibility":4828,
-#    "wind":{ 
+#    "wind":{
 #       "speed":8.7,
 #       "deg":260,
 #       "gust":13.4
 #    },
-#    "snow":{ 
+#    "snow":{
 #       "1h":0.25
 #    },
-#    "clouds":{ 
+#    "clouds":{
 #       "all":90
 #    },
 #    "dt":1573843428,
-#    "sys":{ 
+#    "sys":{
 #       "type":1,
 #       "id":872,
 #       "country":"CA",
