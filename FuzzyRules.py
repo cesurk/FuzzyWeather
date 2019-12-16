@@ -10,7 +10,7 @@ def ControlSystem():
     # and membership functions
     wind = ctrl.Antecedent(np.arange(0, 25, 1), 'wind')
     temperature = ctrl.Antecedent(np.arange(-40, 40, 1), 'temperature')
-    humidity = ctrl.Consequent(np.arange(0, 100, 1), 'humidity')
+    humidity = ctrl.Antecedent(np.arange(0, 100, 1), 'humidity')
 
     # Wind membership functions, Units: Meters per second
     wind['low'] = fuzz.trimf(wind.universe, [0, 0, 7])
@@ -37,41 +37,45 @@ def ControlSystem():
     # View temperature membership functions
     # humidity['comfortable'].view()
 
-    bottom(wind, temperature, humidity, 3, 23, 50)
+    bottoms(wind, temperature, humidity)
 
-def bottom(wind, temperature, humidity, w, t, h):
+def bottoms(wind, temperature, humidity):
     # Build rules for types of bottoms
-    bottom = ctrl.Consequent(np.arange(0, 26, 1), 'bottom')
-    bottom['cold'] = fuzz.trimf(bottom.universe, [0, 30, 60])
-    bottom['hot'] = fuzz.trimf(bottom.universe, [40, 70, 100])
+    bottom = ctrl.Consequent(np.arange(0, 10, 1), 'bottom')
+    bottom['pants'] = fuzz.trimf(bottom.universe, [0, 0, 7])
+    bottom['shorts'] = fuzz.trimf(bottom.universe, [3, 10, 10])
 
-    # Rules dictating shorts
+    # Rules dictating shorts or pants
     rule1 = ctrl.Rule(
         (temperature['warm'] | temperature['hot'] | temperature['very_hot'])
-    , bottom['hot'])
+    , bottom['shorts'])
 
     rule2 = ctrl.Rule(
-        humidity['comfortable'] | humidity['wet'], bottom['hot']
-    )
+        (temperature['moderate'] | temperature['little_cold'] |
+        temperature['cold'] | temperature['very_cold'])
+    , bottom['pants'])
 
-    # Rules dictating pants
     rule3 = ctrl.Rule(
-        (wind['medium'] | wind['high']), bottom['cold']
-    )
+        (temperature['moderate'] | humidity['wet'])
+    , bottom['shorts'])
+
+    rule4 = ctrl.Rule(
+        (temperature['warm'] | wind['high'])
+    , bottom['pants'])
 
     # Pass rules to controller
-    bottom_ctrl = ctrl.ControlSystem([rule1, rule2])
+    bottom_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4])
 
-
-    # bottom_system = ctrl.ControlSystemSimulation(bottom_ctrl)
-    # # Pass in input
-    # bottom_system.input['wind'] = w
-    # bottom_system.input['temperature'] = t
-    # bottom_system.input['humidity'] = h
-    # # Crunch the numbers
-    # bottom_system.compute()
-    # print(bottom_system.output['bottom'])
-    # bottom.view(sim=bottom_system)
+    # Control System to compute values
+    # TO DO: Change to api inputs
+    bottom_system = ctrl.ControlSystemSimulation(bottom_ctrl)
+    bottom_system.input['wind'] = 3
+    bottom_system.input['temperature'] = -23
+    bottom_system.input['humidity'] = 20
+    # Crunch the numbers
+    bottom_system.compute()
+    botom_value = bottom_system.output['bottom']
+    print(botom_value)
 
 
 ControlSystem()
