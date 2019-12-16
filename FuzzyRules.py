@@ -33,7 +33,6 @@ def bottoms(wind, temperature, humidity, w, t, h):
     bottom_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4])
 
     # Control System to compute values
-    # TO DO: Change to api inputs
     bottom_system = ctrl.ControlSystemSimulation(bottom_ctrl)
     bottom_system.input['wind'] = w
     bottom_system.input['temperature'] = t
@@ -83,7 +82,6 @@ def tops(wind, temperature, humidity, w, t, h):
     top_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5])
 
     # Control System to compute values
-    # TO DO: Change to api inputs
     top_system = ctrl.ControlSystemSimulation(top_ctrl)
     top_system.input['wind'] = w
     top_system.input['temperature'] = t
@@ -100,52 +98,3 @@ def tops(wind, temperature, humidity, w, t, h):
         return "sweater"
     else:
         return "shirt"
-
-
-# ----- SAMPLE API RESULT AS REFERENCE -----
-# {
-#    "coord":{
-#       "lon":-75.69,
-#       "lat":45.42
-#    },
-#    "weather":[
-#       {
-#          "id":500,
-#          "main":"Rain",
-#          "description":"light rain",
-#          "icon":"10d"
-#       }
-#    ],
-#    "base":"stations",
-#    "main":{
-#       "temp":-0.18,
-#       "pressure":1016,
-#       "humidity":80,
-#       "temp_min":-1.67,
-#       "temp_max":1.67
-#    },
-#    "visibility":4828,
-#    "wind":{
-#       "speed":8.7,
-#       "deg":260,
-#       "gust":13.4
-#    },
-#    "snow":{
-#       "1h":0.25
-#    },
-#    "clouds":{
-#       "all":90
-#    },
-#    "dt":1573843428,
-#    "sys":{
-#       "type":1,
-#       "id":872,
-#       "country":"CA",
-#       "sunrise":1573819282,
-#       "sunset":1573853610
-#    },
-#    "timezone":-18000,
-#    "id":6094817,
-#    "name":"Ottawa",
-#    "cod":200
-# }
