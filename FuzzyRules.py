@@ -41,7 +41,11 @@ def bottoms(wind, temperature, humidity, w, t, h):
     # Crunch the numbers
     bottom_system.compute()
     bottom_value = bottom_system.output['bottom']
-    print(bottom_value)
+    # Return the type of bottoms to wear
+    if bottom_value <= 6.5:
+        return "pants"
+    else:
+        return "shorts"
 
 # Rule to decide shorts or pants
 def tops(wind, temperature, humidity, w, t, h):
@@ -87,7 +91,15 @@ def tops(wind, temperature, humidity, w, t, h):
     # Crunch the numbers
     top_system.compute()
     top_value = top_system.output['top']
-    print(top_value)
+    # Return the type of top to wear
+    if top_value <= 2.5:
+        return "parka"
+    elif top_value <= 5:
+        return "light jacket"
+    elif top_value <= 7.5:
+        return "sweater"
+    else:
+        return "shirt"
 
 
 # ----- SAMPLE API RESULT AS REFERENCE -----

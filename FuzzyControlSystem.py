@@ -17,7 +17,9 @@ def getCredentials():
 
 # Get Location as input from User
 def getLocationFromUser():
-	location = str(input("Enter your location: "))
+	print("Please enter your location using the format: 'City, Country Code'")
+	print("For example: 'Kingston, CA'")
+	location = str(input("Location: "))
 	return location
 
 # Get weather information from OpenWeatherMap API
@@ -33,8 +35,7 @@ def getWeather(credentials, location):
 
 	# If API call was not valid, try again
 	if (response.status_code != 200):
-		print("Location could not be found, please try again!")
-		print("Please use the format 'City, Province, Country'.")
+		print("\nLocation could not be found, please try again!")
 		updated_location = getLocationFromUser()
 		return getWeather(credentials, updated_location)
 
@@ -42,12 +43,15 @@ def getWeather(credentials, location):
 
 # Apply Fuzzy Rule Set
 def applyFuzzyRules(weather):
-	# Example call: fr.temperatureRule(weather)
+	# Parse weather data to get wind, temperature, and humidity
+	w = weather['wind']['speed']
+	t = weather['main']['temp']
+	h = weather['main']['humidity']
+	# Get and apply membership functions to rules
 	wind, temperature, humidity = membership()
-	w, t, h = 13, 23, 20
-	bottoms(wind, temperature, humidity, w, t, h)
-	tops(wind, temperature, humidity, w, t, h)
-	return
+	bottom = bottoms(wind, temperature, humidity, w, t, h)
+	top = tops(wind, temperature, humidity, w, t, h)
+	print("You should wear", bottom, "and a", top,"today.")
 
 # Main function
 def main():
