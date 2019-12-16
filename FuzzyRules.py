@@ -5,7 +5,7 @@ from skfuzzy import control as ctrl
 import time
 
 # Rule to decide shorts or pants
-def bottoms(wind, temperature, humidity):
+def bottoms(wind, temperature, humidity, w, t, h):
     # Build rules for types of bottoms
     bottom = ctrl.Consequent(np.arange(0, 10, 1), 'bottom')
     bottom['pants'] = fuzz.trimf(bottom.universe, [0, 0, 7])
@@ -35,16 +35,16 @@ def bottoms(wind, temperature, humidity):
     # Control System to compute values
     # TO DO: Change to api inputs
     bottom_system = ctrl.ControlSystemSimulation(bottom_ctrl)
-    bottom_system.input['wind'] = 3
-    bottom_system.input['temperature'] = -23
-    bottom_system.input['humidity'] = 20
+    bottom_system.input['wind'] = w
+    bottom_system.input['temperature'] = t
+    bottom_system.input['humidity'] = h
     # Crunch the numbers
     bottom_system.compute()
     bottom_value = bottom_system.output['bottom']
     print(bottom_value)
 
 # Rule to decide shorts or pants
-def tops(wind, temperature, humidity):
+def tops(wind, temperature, humidity, w, t, h):
     # Build rules for types of bottoms
     top = ctrl.Consequent(np.arange(0, 10, 1), 'top')
     top['parka'] = fuzz.trimf(top.universe, [0, 0, 3])
@@ -81,9 +81,9 @@ def tops(wind, temperature, humidity):
     # Control System to compute values
     # TO DO: Change to api inputs
     top_system = ctrl.ControlSystemSimulation(top_ctrl)
-    top_system.input['wind'] = 3
-    top_system.input['temperature'] = 0
-    top_system.input['humidity'] = 20
+    top_system.input['wind'] = w
+    top_system.input['temperature'] = t
+    top_system.input['humidity'] = h
     # Crunch the numbers
     top_system.compute()
     top_value = top_system.output['top']

@@ -44,8 +44,9 @@ def getWeather(credentials, location):
 def applyFuzzyRules(weather):
 	# Example call: fr.temperatureRule(weather)
 	wind, temperature, humidity = membership()
-	bottoms(wind, temperature, humidity)
-	tops(wind, temperature, humidity)
+	w, t, h = 13, 23, 20
+	bottoms(wind, temperature, humidity, w, t, h)
+	tops(wind, temperature, humidity, w, t, h)
 	return
 
 # Main function
