@@ -1,6 +1,7 @@
 # Import statements
 import requests
-import FuzzyRules as fr
+from FuzzyMembership import membership
+from FuzzyRules import *
 
 # Read in API Keys from txt file into dictionary
 def getCredentials():
@@ -42,6 +43,8 @@ def getWeather(credentials, location):
 # Apply Fuzzy Rule Set
 def applyFuzzyRules(weather):
 	# Example call: fr.temperatureRule(weather)
+	wind, temperature, humidity = membership()
+	bottoms(wind, temperature, humidity)
 	return
 
 # Main function
