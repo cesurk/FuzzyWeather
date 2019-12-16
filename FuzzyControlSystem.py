@@ -45,6 +45,7 @@ def applyFuzzyRules(weather):
 	# Example call: fr.temperatureRule(weather)
 	wind, temperature, humidity = membership()
 	bottoms(wind, temperature, humidity)
+	tops(wind, temperature, humidity)
 	return
 
 # Main function

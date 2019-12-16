@@ -40,9 +40,54 @@ def bottoms(wind, temperature, humidity):
     bottom_system.input['humidity'] = 20
     # Crunch the numbers
     bottom_system.compute()
-    botom_value = bottom_system.output['bottom']
-    print(botom_value)
+    bottom_value = bottom_system.output['bottom']
+    print(bottom_value)
 
+# Rule to decide shorts or pants
+def tops(wind, temperature, humidity):
+    # Build rules for types of bottoms
+    top = ctrl.Consequent(np.arange(0, 10, 1), 'top')
+    top['parka'] = fuzz.trimf(top.universe, [0, 0, 3])
+    top['light_jacket'] = fuzz.trimf(top.universe, [2, 4, 6])
+    top['sweater'] = fuzz.trimf(top.universe, [3, 6, 8])
+    top['shirt'] = fuzz.trimf(top.universe, [7, 10, 10])
+
+    # Rules dictating shirt, sweater, light jacket, or parka
+    rule1 = ctrl.Rule(
+        (temperature['hot'] | temperature['very_hot'])
+    , top['shirt'])
+
+    rule2 = ctrl.Rule(
+        (temperature['cold'] | temperature['very_cold'])
+    , top['parka'])
+
+    rule3 = ctrl.Rule(
+        (temperature['moderate'] |
+        (temperature['warm'] & wind['high']))
+    , top['sweater'])
+
+    rule4 = ctrl.Rule(
+        (temperature['little_cold'] |
+        (temperature['moderate'] & humidity['wet']))
+    , top['light_jacket'])
+
+    rule5 = ctrl.Rule(
+        (wind['low'] & temperature['warm'])
+    , top['shirt'])
+
+    # Pass rules to controller
+    top_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5])
+
+    # Control System to compute values
+    # TO DO: Change to api inputs
+    top_system = ctrl.ControlSystemSimulation(top_ctrl)
+    top_system.input['wind'] = 3
+    top_system.input['temperature'] = 0
+    top_system.input['humidity'] = 20
+    # Crunch the numbers
+    top_system.compute()
+    top_value = top_system.output['top']
+    print(top_value)
 
 
 # ----- SAMPLE API RESULT AS REFERENCE -----
