@@ -22,11 +22,11 @@ def bottoms(wind, temperature, humidity, w, t, h):
     , bottom['pants'])
 
     rule3 = ctrl.Rule(
-        (temperature['moderate'] | humidity['wet'])
+        (temperature['moderate'] & humidity['wet'])
     , bottom['shorts'])
 
     rule4 = ctrl.Rule(
-        (temperature['warm'] | wind['high'])
+        (temperature['warm'] & wind['high'])
     , bottom['pants'])
 
     # Pass rules to controller
